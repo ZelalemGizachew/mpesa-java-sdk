@@ -1,0 +1,46 @@
+{
+  "properties": [
+    {
+      "name": "mpesa.sdk.consumerKey",
+      "type": "java.lang.String",
+      "description": "The consumer key provided by Safaricom",
+      "defaultValue": ""
+    },
+    {
+      "name": "mpesa.sdk.consumerSecret",
+      "type": "java.lang.String",
+      "description": "The consumer secret provided by Safaricom",
+      "defaultValue": ""
+    },
+    {
+      "name": "mpesa.sdk.connectionTimeout",
+      "type": "java.lang.Integer",
+      "description": "The request timeout in milliseconds",
+      "defaultValue": "5000"
+    },
+    {
+      "name": "mpesa.sdk.maxRetries",
+      "type": "java.lang.Integer",
+      "description": "The number of times to retry a request in case of failure",
+      "defaultValue": "1"
+    },
+    {
+      "name": "mpesa.sdk.retryOnConnectionFailure",
+      "type": "java.lang.Boolean",
+      "description": "Whether to retry a request in case of connection failure",
+      "defaultValue": "false"
+    },
+    {
+      "name": "mpesa.sdk.baseUrl",
+      "type": "java.lang.String",
+      "description": "The base URL of the M-Pesa API",
+      "defaultValue": "https://apisandbox.safaricom.et"
+    },
+    {
+      "name": "mpesa.sdk.log-level",
+      "type": "java.lang.String",
+      "defaultValue": "OFF",
+      "description": "The logging level to use for selectively displaying logs. One of \"OFF\", \"SEVERE\", \"WARNING\", \"INFO\", \"CONFIG\", \"FINE\", \"FINER\", \"FINEST\", \"ALL\""
+    }
+  ]
+}
