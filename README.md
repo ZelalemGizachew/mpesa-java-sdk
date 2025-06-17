@@ -1,75 +1,70 @@
-# Java M-Pesa Payment SDK
+# [mpesa-java-sdk] M-Pesa SDK for Java
 
-[![CI Pipeline](https://github.com/dere7/mpesa-sdk/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/dere7/mpesa-sdk/actions/workflows/ci-cd.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://mit-license.org/Safaricom-Ethiopia-PLC)
+
+## Overview
 
 This project integrates with the **Mpesa API**, providing functionality to trigger payments, validate them, register payment notification URLs, and handle USSD push requests and other requests.
 
-## Live Documentation
+## Features
 
-🔗 [mpesa-java-docs-et.vercel.app/](https://mpesa-java-docs-et.vercel.app)
+- **Authentication**: Secure and fully managed authentication and access token management.
+- **Data Models**: Predefined, ready-to-use data models like `UssdPushRequest`, `RegisterUrlRequest`, `C2BPaymentValidationRequest`, and more.
+- **Async and Sync API Client**: Supports both synchronous and asynchronous API calls for optimal performance.
+- **Custom HTTP Client**: Customizable HTTP `Client` for making requests to the M-Pesa API.
+- **Validation**: Automatic validation for request integrity and error handling.
+- **Testing**: Includes tests using **MockWebServer** for simulating API responses, as well as actual integration tests.
+- **Asynchronous Handling**: Supports non-blocking requests for better performance.
+- **Logging**: Logs API requests and responses for debugging.
+- **Error Handling**: Errors are raised as `MpesaApiException` with descriptive messages for troubleshooting.
 
-## 🚀 Features
-
-### 🔒 Authentication
-
-- Secure and fullly manged authentication and access token mangement.
-
-### 📦 Data Models for Request
-
-- Predefined, ready to use data models like `UssdPushRequest`, `RegisterUrlRequest`, `C2BPaymentValidationRequest` and more.
-
-### ⚙️ Async and Sync API Client
-
-- Supports both **synchronous** and **asynchronous** API calls for optimal performance.
-
-### 💻 Custom HTTP Client
-
-- Customizable http `Client` for making HTTP requests to the M-Pesa API.
-
-### 🛡️ Validation
-
-- Automatic validation for request integrity and error handling.
-
-### 🧪 Testing
-
-- Includes tests using **MockWebServer** for simulating API responses and also contain for actual integration tests.
-
-## 🔧 Requirements
+## Requirements
 
 - Java 11 or higher.
 - Maven for dependency management.
 - Mpesa API credentials (consumer key, consumer secret).
 
-## 🛠️ Installation
+## Installation
 
-To integrate Mpesa Payment API into your project, follow these steps:
+To integrate Mpesa Payment SDK into your project, follow these steps:
 
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/dere7/mpesa-sdk.git
+   git clone https://github.com/Safaricom-Ethiopia-PLC/mpesa-java-sdk.git
    cd mpesa-sdk
    ```
 
 2. **Install dependencies**:
    For Maven:
+
    ```bash
    mvn install -Dgroups=mocked # This runs only mock tests then install locally
    ```
 
-## ⚡ Usage Examples
+## Usage
 
 ### Maven
 
 ```xml
 <dependency>
-  <groupId>io.github.dere7</groupId>
-  <artifactId>mpesa-sdk</artifactId>
+  <groupId>et.safaricom</groupId>
+  <artifactId>mpesa-java-sdk</artifactId>
   <version>1.1</version>
 </dependency>
 ```
 
-### Example 1: Trigger USSD Push Request (Without Configuration)
+### Example 1: Authentication
+
+```java
+Mpesa mpesa = new Mpesa("test_consumer_key", "test_consumer_secret");
+```
+
+### Example 2: STK Push Integration
+
+There are various was for triggering STK (USSD) Push Request:
+
+#### Example 2.1: Without Configuration
 
 ```java
 // Create Mpesa instance without configuration
@@ -93,7 +88,7 @@ UssdPushResponse response = mpesa.triggerUssdPush(request);
 System.out.println(response.getResponseDescription());
 ```
 
-### Example 2: Trigger USSD Push Request (With Configuration)
+#### Example 2.2: With Configuration
 
 ```java
 // Create Mpesa instance with configuration
@@ -123,7 +118,7 @@ UssdPushResponse response = mpesa.triggerUssdPush(request);
 System.out.println(response.getResponseDescription());
 ```
 
-### Example 3: Trigger USSD Push Request (Asynchronous)
+#### Example 2.3: Asynchronous
 
 ```java
 UssdPushRequest request = UssdPushRequest.builder()
@@ -149,7 +144,7 @@ mpesa.triggerUssdPushAsync(request,
     });
 ```
 
-### Example 4: Custom Client
+### Example 3: Custom Client
 
 - You can create your custom http client and use it to make requests to the API.
 
@@ -157,7 +152,7 @@ mpesa.triggerUssdPushAsync(request,
 // Create a custom client
 public class ClientImpl implements Client {
   @Override
-  	<T> ResponseClient sendSyncRequest(RequestClient<T> requestClient) {
+   <T> ResponseClient sendSyncRequest(RequestClient<T> requestClient) {
       // YOUR IMPLEMENTATION HERE
     };
 
@@ -174,7 +169,7 @@ Mpesa mpesa = new Mpesa("test_consumer_key", "test_consumer_secret");
 mpesa.setClient(new ClientImpl());
 ```
 
-## 📚 Method Docs
+## Method Docs
 
 ### Available Methods
 
@@ -210,6 +205,7 @@ mpesa.setClient(new ClientImpl());
 
 - **`simulatePayment`**
   simulate a transaction after validation.
+
   ```java
   SimulateResponse response = mpesa.simulatePayment(simulateRequest);
   ```
@@ -239,6 +235,7 @@ mpesa.setClient(new ClientImpl());
 
 - **`accountBalance`**
   Queries the balance of the shortcode (synchronous).
+
   ```java
   SuccessResponse response = mpesa.accountBalance(accountBalanceRequest);
   ```
@@ -305,6 +302,7 @@ For each synchronous method, there is an equivalent asynchronous method. These a
   ```
 
 - **Account Balance**
+
   ```java
   mpesa.accountBalanceAsync(accountBalanceRequest,
       response -> System.out.println("Balance fetched."),
@@ -319,11 +317,41 @@ For each synchronous method, there is an equivalent asynchronous method. These a
 - **`baseUrl`**: The base URL of the M-Pesa API (default: `https://apisandbox.safaricom.et`).
 - **`logLevel`**: Log level for selectively displaying logs (default: `Level.SEVERE`).
 
-### 🛠️ Error Handling
+## Contributing
 
-- Errors are raised as `MpesaApiException` with descriptive messages for troubleshooting.
+Contributions are welcome! Please follow these steps:
 
-## 💡 Additional Features
+1. **Fork the repository** on GitHub.
+2. **Clone your fork** to your local machine.
 
-- **Asynchronous Handling**: Supports non-blocking requests for better performance.
-- **Logging**: Logs API requests and responses for debugging.
+   ```bash
+   git clone https://github.com/Safaricom-Ethiopia-PLC/mpesa-java-sdk.git
+   ```
+
+3. **Create a new feature branch**.
+
+   ```bash
+   git checkout -b feature/<your-feature-name>
+   ```
+
+4. **Make your changes** and commit them.
+
+   ```bash
+   git commit -am "Add new <short feature description>"
+   ```
+
+5. **Push your branch** to your fork.
+
+   ```bash
+   git push origin feature/<your-feature-name>
+   ```
+
+6. **Open a pull request** from your branch to the main repository.
+
+## License
+
+This project is licensed under the [MIT License](https://mit-license.org/Safaricom-Ethiopia-PLC). See the [LICENSE](LICENSE) file for more details.
+
+---
+
+_Happy coding with M-Pesa Java SDK!_
